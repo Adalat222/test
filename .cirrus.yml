@@ -15,7 +15,7 @@ task:
       cpu: 8
       memory: 32G
         
-  Sync_script:
+  Size-file_data:
       - df -h
 #     - cd ~/work
 #     - repo init --depth=1 --no-repo-verify -u https://github.com/Evolution-X/manifest -b tiramisu -g default,-mips,-darwin,-notdefault
@@ -29,13 +29,13 @@ task:
 #     - git clone https://github.com/LineageOS/android_device_samsung_slsi_sepolicy -b lineage-18.1 device/samsung_slsi/sepolicy
 #     - git clone https://github.com/LineageOS/android_hardware_samsung -b lineage-18.1 hardware/samsung
 
-  Build_script:
+  List_data:
       - ls -a
 #     - . build/envsetup.sh
 #     - lunch evolution_lavender-userdebug
 #     - mka evolution
      
-  Upload_script:
+  Free_data:
       - free -t -h
 #     - cd out/target/product/lavender
 #     - curl -sL https://git.io/file-transfer | sh
