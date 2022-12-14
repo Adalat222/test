@@ -25,18 +25,3 @@ task:
      - sudo sed -i "s/xxx/5df57028da95978f133c6503000c88814e0ccfe37f2001bf96/g" /etc/buildkite-agent/buildkite-agent.cfg
   Build-setup_code:
      - sudo service buildkite-agent start
-# Sync-rom_script:
-#    - git config --global user.name "Tiktodz"
-#    - git config --global user.email "$EMAIL"
-#    - ./script/sync.sh
-#    
-# Build-rom_script:
-#    - ./script/building.sh
-#    
-# Ccache-info_script:
-#    - set -e
-#    - export CCACHE_DIR=$WORKDIR/ccache
-#    - ccache -s
-
-# Upload-build_script:
-#    - ./script/ziping.sh
