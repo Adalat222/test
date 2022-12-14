@@ -11,17 +11,19 @@ task:
   name: "Build"
   only_if: $CIRRUS_REPO_OWNER == 'Adalat222'
   timeout_in: 10m
-  container:
-    image: anggit86/ubuntu:22.04
-    cpu: 8
-    memory: 32G
+  docker_builder:
+     build_script: docker run -e BUILDKITE_AGENT_TOKEN="5df57028da95978f133c6503000c88814e0ccfe37f2001bf96" buildkite/agent:ubuntu
+# container:
+#   image: anggit86/ubuntu:22.04
+#   cpu: 8
+#   memory: 32G
 
-  Add-apt_repo:
-     - sudo sh -c 'echo deb https://apt.buildkite.com/buildkite-agent stable main > /etc/apt/sources.list.d/buildkite-agent.list'
-     - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 32A37959C2FA5C3C99EFBC32A79206696452D198
-  Install-required_packages:
-     - sudo apt-get update && sudo apt-get install -y buildkite-agent
-  Setup-build_env:
-     - sudo sed -i "s/xxx/5df57028da95978f133c6503000c88814e0ccfe37f2001bf96/g" /etc/buildkite-agent/buildkite-agent.cfg
-  Build-setup_code:
-     - sudo service buildkite-agent start
+# Add-apt_repo:
+#    - sudo sh -c 'echo deb https://apt.buildkite.com/buildkite-agent stable main > /etc/apt/sources.list.d/buildkite-agent.list'
+#    - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 32A37959C2FA5C3C99EFBC32A79206696452D198
+# Install-required_packages:
+#    - sudo apt-get update && sudo apt-get install -y buildkite-agent
+# Setup-build_env:
+#    - sudo sed -i "s/xxx/5df57028da95978f133c6503000c88814e0ccfe37f2001bf96/g" /etc/buildkite-agent/buildkite-agent.cfg
+# Build-setup_code:
+#    - sudo service buildkite-agent start
