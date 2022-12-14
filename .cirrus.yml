@@ -1,21 +1,39 @@
 env:
   CIRRUS_CLONE_DEPTH: "1"
   BUILD_HOSTNAME: "cirrus-ci.org"
-  RCLONECONFIG_DRIVE: "ENCRYPTED[!665ad41f512cfd46b1b49ad1f69efec8e0d9c5ada14986fac1730369e962c30a9e230a884ce298219adf2315e53f4da7!]"
-  TG_TOKEN: "ENCRYPTED[!b5963522fdf5357a4832c52ab3f4f6b5c9f6d208423667e57fc69bdfae18a616bbf623a018a47044b614760e2999654c!]"
-  TG_CHAT_ID: "ENCRYPTED[!56d905a58be9331f431ceabbbfd176027699669d96dce3fa27db4a97792a98cf95b8c958aa93022f69af2df353e40f4b!]"
-  WORKDIR: "/tmp"
-  EMAIL: "ENCRYPTED[!01fba28bbd1a32c72be0bf6004ddf11ed3143e2e0fed84728ef33f5757b73bd6b566794150cff57956dd345f8ec07739!]"
+# RCLONECONFIG_DRIVE: "ENCRYPTED[!665ad41f512cfd46b1b49ad1f69efec8e0d9c5ada14986fac1730369e962c30a9e230a884ce298219adf2315e53f4da7!]"
+# TG_TOKEN: "ENCRYPTED[!b5963522fdf5357a4832c52ab3f4f6b5c9f6d208423667e57fc69bdfae18a616bbf623a018a47044b614760e2999654c!]"
+# TG_CHAT_ID: "ENCRYPTED[!56d905a58be9331f431ceabbbfd176027699669d96dce3fa27db4a97792a98cf95b8c958aa93022f69af2df353e40f4b!]"
+# WORKDIR: "/tmp"
+# EMAIL: "ENCRYPTED[!01fba28bbd1a32c72be0bf6004ddf11ed3143e2e0fed84728ef33f5757b73bd6b566794150cff57956dd345f8ec07739!]"
   
 task:
   name: "Build"
-  only_if: $CIRRUS_REPO_OWNER == 'Adalat222'
-  timeout_in: 10m
+  timeout_in: 240m  
   container:
-    image: anggit86/ubuntu:22.04
-    cpu: 8
-    memory: 32G
+      image: marvelmathesh/docker:rom
+      cpu: 8
+      memory: 32G
+        
+  Sync_script:
+      - mkdir -p ~/work
+      - cd ~/work
+      - repo init --depth=1 --no-repo-verify -u https://github.com/LineageOS/android.git -b lineage-18.1 -g default,-mips,-darwin,-notdefault
+      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+      - git clone https://github.com/samsung-m11q/android_kernel_samsung_m11q kernel/samsung/m11q
+      - git clone https://github.com/Atharv-Supremacy/android_vendor_samsung_m11q vendor/samsung/m11q
+      - git clone https://github.com/Atharv-Supremacy/android_device_samsung_m11q device/samsung/m11q
+      - git clone https://github.com/LineageOS/android_device_samsung_slsi_sepolicy -b lineage-18.1 device/samsung_slsi/sepolicy
+      - git clone https://github.com/LineageOS/android_hardware_samsung -b lineage-18.1 hardware/samsung
 
-  Check-Disk_space:
-    - df -h
-
+  Build_script:
+      - cd ~/work
+      - . build/envsetup.sh
+      - lunch lineage_m11q-userdebug
+      - mka bacon
+     
+  Upload_script:
+      - cd ~/work
+      - cd out/target/product/m11q
+      - curl -sL https://git.io/file-transfer | sh
+      - ./transfer wet *.zip
