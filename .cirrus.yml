@@ -16,8 +16,8 @@ task:
     image: anggit86/ubuntu:22.04
     cpu: 8
     memory: 32G
-  check-size:
-    - df -h
+  Check-size_storage:
+    - ./build.sh
 # Add-apt_repo:
 #    - sudo sh -c 'echo deb https://apt.buildkite.com/buildkite-agent stable main > /etc/apt/sources.list.d/buildkite-agent.list'
 #    - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 32A37959C2FA5C3C99EFBC32A79206696452D198
