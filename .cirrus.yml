@@ -1,0 +1,42 @@
+env:
+  CIRRUS_CLONE_DEPTH: "1"
+  BUILD_HOSTNAME: "cirrus-ci.org"
+  RCLONECONFIG_DRIVE: "ENCRYPTED[!665ad41f512cfd46b1b49ad1f69efec8e0d9c5ada14986fac1730369e962c30a9e230a884ce298219adf2315e53f4da7!]"
+  TG_TOKEN: "ENCRYPTED[!b5963522fdf5357a4832c52ab3f4f6b5c9f6d208423667e57fc69bdfae18a616bbf623a018a47044b614760e2999654c!]"
+  TG_CHAT_ID: "ENCRYPTED[!56d905a58be9331f431ceabbbfd176027699669d96dce3fa27db4a97792a98cf95b8c958aa93022f69af2df353e40f4b!]"
+  WORKDIR: "/tmp"
+  EMAIL: "ENCRYPTED[!01fba28bbd1a32c72be0bf6004ddf11ed3143e2e0fed84728ef33f5757b73bd6b566794150cff57956dd345f8ec07739!]"
+  
+task:
+  name: "Build"
+  only_if: $CIRRUS_REPO_OWNER == 'Adalat222'
+  timeout_in: 180m
+  container:
+    image: anggit86/ubuntu:22.04
+    cpu: 8
+    memory: 32G
+
+  Add-apt_repo:
+     - sudo sh -c 'echo deb https://apt.buildkite.com/buildkite-agent stable main > /etc/apt/sources.list.d/buildkite-agent.list'
+     - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 32A37959C2FA5C3C99EFBC32A79206696452D198
+  Install-required_packages:
+     - sudo apt-get update && sudo apt-get install -y buildkite-agent
+  Setup-build_env:
+     - sudo sed -i "s/xxx/5df57028da95978f133c6503000c88814e0ccfe37f2001bf96/g" /etc/buildkite-agent/buildkite-agent.cfg
+  Build-setup_code:
+     - sudo service buildkite-agent start
+# Sync-rom_script:
+#    - git config --global user.name "Tiktodz"
+#    - git config --global user.email "$EMAIL"
+#    - ./script/sync.sh
+#    
+# Build-rom_script:
+#    - ./script/building.sh
+#    
+# Ccache-info_script:
+#    - set -e
+#    - export CCACHE_DIR=$WORKDIR/ccache
+#    - ccache -s
+
+# Upload-build_script:
+#    - ./script/ziping.sh
