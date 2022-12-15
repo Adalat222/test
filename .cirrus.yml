@@ -29,7 +29,7 @@ task:
       - mkdir ~/evo-x
       - cd ~/evo-x
       - repo init  --no-repo-verify --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH  -g default,-mips,-darwin,-notdefault
-      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8 --fail-fast
       - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
 
   Build_script:
