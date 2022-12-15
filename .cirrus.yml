@@ -19,7 +19,7 @@ env:
 
 task:
   name: "Building recovery"
-  timeout_in: 240m  
+  timeout_in: 240m
   container:
       image: phoenix1708/aosp
       cpu: 8
@@ -27,12 +27,10 @@ task:
   
   Sync_script:
       - repo init --no-repo-verify --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH  -g default,-mips,-darwin,-notdefault
-      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8 --fail-fast
+      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j5 --fail-fast
       - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
 
   Build_script:
-      - export ALLOW_MISSING_DEPENDENCIES=true
-      - export LC_ALL="C"
       - export USE_CCACHE=1
       - export CCACHE_EXEC=/usr/bin/ccache
       - ccache -M 10G
