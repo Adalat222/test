@@ -16,5 +16,9 @@ task:
       memory: 32G 
     start_code: 
       - ./run.sh
+      - df -h
     check_flutter:
       - flutter doctor
+      - dart --version
+    system_info:
+      - cat /etc/os-release
