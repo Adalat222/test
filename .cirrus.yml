@@ -11,6 +11,7 @@ task:
   name: "Build"
   timeout_in: 30m  
   container:
+      image: ubuntu:latest
       cpu: 8
       memory: 32G
         
