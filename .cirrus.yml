@@ -20,6 +20,7 @@ env:
 task:
   name: "Building recovery"
   timeout_in: 240m
+  stateful: true
   container:
       image: phoenix1708/aosp
       cpu: 8
