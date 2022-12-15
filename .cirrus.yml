@@ -15,8 +15,10 @@ task:
       cpu: 8
       memory: 32G
         
-  Flutter_Check:
-      - flutter doctor -v
+  Setup_Data:
+      - ./run.sh
+# Flutter_Check:
+#     - flutter doctor -v
 #     - cd ~/work
 #     - repo init --depth=1 --no-repo-verify -u https://github.com/LineageOS/android.git -b lineage-18.1 -g default,-mips,-darwin,-notdefault
 #     - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
@@ -26,12 +28,12 @@ task:
 #     - git clone https://github.com/LineageOS/android_device_samsung_slsi_sepolicy -b lineage-18.1 device/samsung_slsi/sepolicy
 #     - git clone https://github.com/LineageOS/android_hardware_samsung -b lineage-18.1 hardware/samsung
 
-  Flutter_Version:
-      - dart --version
+# Flutter_Version:
+#     - dart --version
 #     - . build/envsetup.sh
 #     - lunch lineage_m11q-userdebug
 #     - mka bacon
-     
+#    
 # Upload_script:
 #     - cd ~/work
 #     - cd out/target/product/m11q
