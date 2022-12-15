@@ -24,7 +24,7 @@ task:
   container:
       image: phoenix1708/aosp
       cpu: 8
-      memory: 32G
+      memory: 64G
   
   Sync_script:
       - repo init  --no-repo-verify --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH  -g default,-mips,-darwin,-notdefault
