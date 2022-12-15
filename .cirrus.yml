@@ -16,6 +16,7 @@ env:
     DT_BRANCH: evo-x
     LUNCH_TARGET: evolution_gauguin_userdebug
     TARGET: evolution
+    WORKDIR: "/tmp"
 
 task:
   name: "Building recovery"
@@ -26,14 +27,11 @@ task:
       memory: 32G
   
   Sync_script:
-      - mkdir ~/evo-x
-      - cd ~/evo-x
       - repo init  --no-repo-verify --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH  -g default,-mips,-darwin,-notdefault
       - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8 --fail-fast
       - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
 
   Build_script:
-      - cd ~/evo-x
       - export ALLOW_MISSING_DEPENDENCIES=true
       - export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
       - export LC_ALL="C"
@@ -45,7 +43,6 @@ task:
       - mka $TARGET
      
   Upload_script:
-      - cd ~/evo-x
       - cd out/target/product/$DEVICE
       - ls -lh
       - curl -sL https://git.io/file-transfer | sh 
