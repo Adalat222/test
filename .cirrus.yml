@@ -8,34 +8,13 @@ env:
 # EMAIL: "ENCRYPTED[!01fba28bbd1a32c72be0bf6004ddf11ed3143e2e0fed84728ef33f5757b73bd6b566794150cff57956dd345f8ec07739!]"
   
 task:
-  name: "Build"
-  timeout_in: 30m  
-  container:
-      image: ubuntu:latest
-      cpu: 8
-      memory: 32G
-        
-  Setup_Data:
+    name: build # Project name
+    timeout_in: 120m 
+    container:
+      image: ubuntu:latest 
+      cpu: 8  
+      memory: 32G 
+    start_code: 
       - ./run.sh
-# Flutter_Check:
-#     - flutter doctor -v
-#     - cd ~/work
-#     - repo init --depth=1 --no-repo-verify -u https://github.com/LineageOS/android.git -b lineage-18.1 -g default,-mips,-darwin,-notdefault
-#     - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
-#     - git clone https://github.com/samsung-m11q/android_kernel_samsung_m11q kernel/samsung/m11q
-#     - git clone https://github.com/Atharv-Supremacy/android_vendor_samsung_m11q vendor/samsung/m11q
-#     - git clone https://github.com/Atharv-Supremacy/android_device_samsung_m11q device/samsung/m11q
-#     - git clone https://github.com/LineageOS/android_device_samsung_slsi_sepolicy -b lineage-18.1 device/samsung_slsi/sepolicy
-#     - git clone https://github.com/LineageOS/android_hardware_samsung -b lineage-18.1 hardware/samsung
-
-# Flutter_Version:
-#     - dart --version
-#     - . build/envsetup.sh
-#     - lunch lineage_m11q-userdebug
-#     - mka bacon
-#    
-# Upload_script:
-#     - cd ~/work
-#     - cd out/target/product/m11q
-#     - curl -sL https://git.io/file-transfer | sh
-#     - ./transfer wet *.zip
+    check_flutter:
+      - flutter doctor
