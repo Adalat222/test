@@ -16,7 +16,6 @@ env:
     DT_BRANCH: evo-x
     LUNCH_TARGET: evolution_gauguin_userdebug
     TARGET: evolution
-    WORKDIR: "/tmp"
 
 task:
   name: "Building recovery"
