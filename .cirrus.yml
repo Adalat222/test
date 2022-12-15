@@ -7,18 +7,45 @@
 # WORKDIR: "/tmp"
 # EMAIL: "ENCRYPTED[!01fba28bbd1a32c72be0bf6004ddf11ed3143e2e0fed84728ef33f5757b73bd6b566794150cff57956dd345f8ec07739!]"
   
+env:
+    MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git
+    MANIFEST_BRANCH: twrp-12.1
+    DEVICE: gauguin
+    DT_LINK: https://github.com/Seifood/device_xiaomi_gauguin-TWRP
+    DT_PATH: device/xiaomi/gauguin
+    LUNCH_TARGET: twrp
+    TARGET: bootimage
+
 task:
-    name: build # Project name
-    timeout_in: 120m 
-    container:
-      image: ubuntu:latest 
-      cpu: 8  
-      memory: 32G 
-    start_code: 
-      - ./run.sh
-      - df -h
-    check_flutter:
-      - flutter doctor
-      - dart --version
-    system_info:
-      - cat /etc/os-release
+  name: "Building recovery"
+  timeout_in: 240m  
+  container:
+      image: marvelmathesh/docker:rom
+      cpu: 8
+      memory: 32G
+  
+  Sync_script:
+      - mkdir ~/twrp
+      - cd ~/twrp
+      - repo init --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH
+      - repo sync
+      - git clone $DT_LINK $DT_PATH
+
+  Build_script:
+      - cd ~/twrp
+      - export ALLOW_MISSING_DEPENDENCIES=true
+      - export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
+      - export LC_ALL="C"
+      - export USE_CCACHE=1
+      - export CCACHE_EXEC=/usr/bin/ccache
+      - ccache -M 50G
+      - . build/envsetup.sh
+      - lunch twrp_selene-eng
+      - mka $TARGET
+     
+  Upload_script:
+      - cd ~/twrp
+      - cd out/target/product/$DEVICE
+      - ls -lh
+      - curl -sL https://git.io/file-transfer | sh 
+      - ./transfer gof boot.img
