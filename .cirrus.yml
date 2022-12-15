@@ -14,7 +14,7 @@ env:
     DT_PATH: device/xiaomi/gauguin
     DT_BRANCH: evo-x
     CIRRUS_CLONE_DEPTH: "1"
-    LUNCH_TARGET: evolution_gauguin_userdebug
+    LUNCH_TARGET: evolution_gauguin-userdebug
     TARGET: evolution
 
 task:
