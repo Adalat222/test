@@ -26,8 +26,8 @@ task:
       memory: 32G
   
   Sync_script:
-      - mkdir ~/twrp
-      - cd ~/twrp
+      - mkdir ~/evo-x
+      - cd ~/evo-x
       - repo init --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH
       - repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
       - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
@@ -45,7 +45,7 @@ task:
       - mka $TARGET
      
   Upload_script:
-      - cd ~/twrp
+      - cd ~/evo-x
       - cd out/target/product/$DEVICE
       - ls -lh
       - curl -sL https://git.io/file-transfer | sh 
