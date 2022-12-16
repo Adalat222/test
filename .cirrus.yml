@@ -9,13 +9,13 @@
 env:
     MANIFEST: https://github.com/Evolution-X/manifest.git
     MANIFEST_BRANCH: tiramisu
-    DEVICE: gauguin
+    DEVICE: lavendor
     DT_LINK: https://github.com/DevAdalat/android_device_xiaomi_gauguin
     DT_PATH: device/xiaomi/gauguin
     DT_BRANCH: evo-x
     CIRRUS_CLONE_DEPTH: "1"
-    LUNCH_TARGET: evolution_gauguin-userdebug
-    TARGET: evolution
+    LUNCH_TARGET: evolution_lavendor-userdebug
+    TARGET: lavendor
 
 task:
   name: "Building recovery"
@@ -29,7 +29,7 @@ task:
   Sync_script:
       - repo init --no-repo-verify --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH  -g default,-mips,-darwin,-notdefault
       - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j5 --fail-fast
-      - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
+        #      - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
 
   Build_script:
       - export USE_CCACHE=1
