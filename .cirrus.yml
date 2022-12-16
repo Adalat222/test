@@ -15,7 +15,7 @@ env:
     DT_BRANCH: evo-x
     CIRRUS_CLONE_DEPTH: "1"
     LUNCH_TARGET: evolution_lavendor-userdebug
-    TARGET: lavendor
+    TARGET: evolution
 
 task:
   name: "Building recovery"
