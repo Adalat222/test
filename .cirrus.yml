@@ -36,8 +36,8 @@ task:
       - export CCACHE_EXEC=/usr/bin/ccache
       - ccache -M 10G
       - . build/envsetup.sh
-      - lunch $LUNCH_TARGET
-      - mka $TARGET
+      - lunch evolution_lavendor-userdebug
+      - mka evolution
      
   Upload_script:
       - cd out/target/product/$DEVICE
