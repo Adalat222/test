@@ -9,12 +9,12 @@
 env:
     MANIFEST: https://github.com/Evolution-X/manifest.git
     MANIFEST_BRANCH: tiramisu
-    DEVICE: lavendor
+    DEVICE: gauguin
     DT_LINK: https://github.com/DevAdalat/android_device_xiaomi_gauguin
     DT_PATH: device/xiaomi/gauguin
     DT_BRANCH: evo-x
     CIRRUS_CLONE_DEPTH: "1"
-    LUNCH_TARGET: evolution_lavendor-userdebug
+    LUNCH_TARGET: evolution_gauguin-userdebug
     TARGET: evolution
 
 task:
@@ -22,21 +22,21 @@ task:
   timeout_in: 240m
   stateful: true
   container:
-      image: phoenix1708/aosp
+      image: tjokiel/aosp
       cpu: 8
       memory: 32G
   
   Sync_script:
       - repo init --no-repo-verify --depth=1 -u $MANIFEST -b $MANIFEST_BRANCH  -g default,-mips,-darwin,-notdefault
       - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j5 --fail-fast
-        #      - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
+      - git clone $DT_LINK $DT_PATH -b $DT_BRANCH
 
   Build_script:
       - export USE_CCACHE=1
       - export CCACHE_EXEC=/usr/bin/ccache
       - ccache -M 10G
       - . build/envsetup.sh
-      - lunch evolution_lavendor-userdebug
+      - lunch evolution_gauguin-userdebug
       - mka evolution
      
   Upload_script:
